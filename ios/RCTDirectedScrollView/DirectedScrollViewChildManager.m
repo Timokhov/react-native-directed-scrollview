@@ -28,7 +28,7 @@ static NSString *const SCROLL_DIRECTION_VERTICAL = @"vertical";
 
 @implementation DirectedScrollViewChildManager
 
-RCT_EXPORT_MODULE()
+RCT_EXPORT_MODULE(DirectedScrollViewChild)
 
 @synthesize bridge = _bridge;
 
