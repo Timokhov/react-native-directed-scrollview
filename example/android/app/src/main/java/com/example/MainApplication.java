@@ -1,9 +1,11 @@
 package com.example;
 
 import android.app.Application;
+import android.util.Log;
 
 import com.facebook.react.ReactApplication;
 import com.rnds.DirectedScrollViewPackage;
+import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
@@ -26,11 +28,6 @@ public class MainApplication extends Application implements ReactApplication {
           new MainReactPackage(),
             new DirectedScrollViewPackage()
       );
-    }
-
-    @Override
-    protected String getJSMainModuleName() {
-      return "index";
     }
   };
 

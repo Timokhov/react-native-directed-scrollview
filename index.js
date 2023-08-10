@@ -4,7 +4,7 @@ import ScrollResponder from 'react-native/Libraries/Components/ScrollResponder';
 import createReactClass from 'create-react-class';
 
 const NativeScrollView = requireNativeComponent('DirectedScrollView');
-//const NativeScrollViewChild = requireNativeComponent('DirectedScrollViewChild');
+const NativeScrollViewChild = requireNativeComponent('DirectedScrollViewChild');
 
 const ScrollView = createReactClass({
   mixins: [ScrollResponder.Mixin],
@@ -21,31 +21,55 @@ const ScrollView = createReactClass({
     return ReactNative.findNodeHandle(this._scrollViewRef);
   },
   scrollTo: function({ x, y, animated }) {
-     UIManager.dispatchViewManagerCommand(
-      this.getScrollableNode(),
-      UIManager.DirectedScrollView.Commands.scrollTo,
-      [x || 0, y || 0, animated !== false],
-    );
+    const scrollableNode = this.getScrollableNode();
+    if (scrollableNode) {
+      UIManager.dispatchViewManagerCommand(
+        scrollableNode,
+        UIManager.DirectedScrollView.Commands.scrollTo,
+        [x || 0, y || 0, animated !== false],
+      );
+    }
   },
   zoomToStart: function({ animated }) {
-     UIManager.dispatchViewManagerCommand(
-      this.getScrollableNode(),
-      UIManager.DirectedScrollView.Commands.zoomToStart,
-      [animated !== false],
-    );
+    const scrollableNode = this.getScrollableNode();
+    if (scrollableNode) {
+      UIManager.dispatchViewManagerCommand(
+        scrollableNode,
+        UIManager.DirectedScrollView.Commands.zoomToStart,
+        [animated !== false],
+      );
+    }
+  },
+  updateContentOffsetIfNeeded: function() {
+    if (Platform.OS === 'android') {
+      return;
+    }
+    setTimeout(() => {
+      const scrollableNode = this.getScrollableNode();
+      if (scrollableNode) {
+        UIManager.dispatchViewManagerCommand(
+          scrollableNode,
+          UIManager.DirectedScrollView.Commands.updateContentOffsetIfNeeded,
+          [],
+        );
+      }
+    }, 0);
   },
   _scrollViewRef: null,
   _setScrollViewRef: function(ref) {
     this._scrollViewRef = ref;
   },
   componentDidMount: function() {
-    setTimeout(() => {
-      this.zoomToStart({animated: false});
-    }, 0);
+    this.updateContentOffsetIfNeeded();
+  },
+  componentDidUpdate: function(prevProps, prevState) {
+    if (this.props.contentContainerStyle != prevProps.contentContainerStyle) {
+      this.updateContentOffsetIfNeeded();
+    }
   },
   render: function() {
     return (
-      <NativeScrollView 
+      <NativeScrollView
         {...this.props}
         ref={this._setScrollViewRef}
         onScrollBeginDrag={this.scrollResponderHandleScrollBeginDrag}
@@ -74,9 +98,9 @@ export default ScrollView;
 export const ScrollViewChild = createReactClass({
   render: function() {
     return (
-      <div>
+      <NativeScrollViewChild {...this.props}>
         {this.props.children}
-      </div>
+      </NativeScrollViewChild>
     );
   }
 });

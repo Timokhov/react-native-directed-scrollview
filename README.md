@@ -1,7 +1,3 @@
-# UNMAINTAINED
-
-This library is no longer actively maintained and is not guaranteed to work with the latest version of React Native. Feel free to fork the repo and/or adapt the code.
-
 # react-native-directed-scrollview
 
 ![demo](example/rnds-demo.gif)
@@ -20,8 +16,8 @@ The following props are supported:
 | `maximumZoomScale` | `1.0` | How far the content can zoom in. |
 | `bounces` | `true` | Whether content bounces at the limits when scrolling. |
 | `bouncesZoom` | `true` | Whether content bounces at the limits when zooming. |
-| `alwaysBounceHorizontal` | `false` | When `bounces` is enabled, content will bounce horizontally even if the content is smaller than the bounds of the scroll view. |
-| `alwaysBounceVertical` | `false` | When `bounces` is enabled, content will bounce vertically even if the content is smaller than the bounds of the scroll view.. |
+| `alwaysBounceHorizontal` | `true` | When `bounces` is enabled, content will bounce horizontally. |
+| `alwaysBounceVertical` | `true` | When `bounces` is enabled, content will bounce vertically. |
 | **ios** `showsVerticalScrollIndicator` | `true` | Whether vertical scroll bars are visible. |
 | **ios** `showsHorizontalScrollIndicator` | `true` | Whether horizontal scroll bars are visible. |
 
@@ -31,10 +27,16 @@ The following methods are supported:
 | --- | --- | --- |
 | `scrollTo` | `scrollTo({x: 100, y: 100, animated: true})` | Scrolls to a given x and y offset. |
 
-## Installation
+## Installation (autolinking)
+- `yarn add react-native-directed-scrollview`
+- `cd ios && pod install`
 
-- `npm install react-native-directed-scrollview --save`
-- `react-native link` (or `rnpm link`)
+### Manual linking
+- `yarn add react-native-directed-scrollview`
+- `react-native link`
+- `cd ios && pod install`
+
+Verify that `pod 'react-native-directed-scrollview', :path => '../node_modules/react-native-directed-scrollview'` has been added to your Podfile
 
 ## Usage
 
