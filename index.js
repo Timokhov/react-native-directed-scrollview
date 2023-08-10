@@ -4,7 +4,7 @@ import ScrollResponder from 'react-native/Libraries/Components/ScrollResponder';
 import createReactClass from 'create-react-class';
 
 const NativeScrollView = requireNativeComponent('DirectedScrollView');
-const NativeScrollViewChild = requireNativeComponent('DirectedScrollViewChild');
+//const NativeScrollViewChild = requireNativeComponent('DirectedScrollViewChild');
 
 const ScrollView = createReactClass({
   mixins: [ScrollResponder.Mixin],
@@ -74,9 +74,9 @@ export default ScrollView;
 export const ScrollViewChild = createReactClass({
   render: function() {
     return (
-      <NativeScrollViewChild {...this.props}>
+      <div>
         {this.props.children}
-      </NativeScrollViewChild>
+      </div>
     );
   }
 });
